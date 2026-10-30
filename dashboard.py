@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sqlalchemy import create_engine
 import requests
 import io
 import os
@@ -26,9 +25,10 @@ LIMIT 10;
 df_sales = pd.read_sql(query, engine)
 
 # 3. Gọi API lấy giá sản phẩm và kết hợp dữ liệu
-@st.cache_data # Cache để không gọi API lại mỗi lần tương tác
+@st.cache_data 
 def get_product_prices():
-    res = requests.get("https://fakestoreapi.com/products").json()
+    headers = {'User-Agent': 'PostmanRuntime/7.36.3', 'Accept': '*/*'}
+    res = requests.get("https://fakestoreapi.com/products", headers=headers, timeout=15).json()
     df_products = pd.json_normalize(res)[['id', 'price', 'title']]
     return df_products.rename(columns={'id': 'product_id'})
 

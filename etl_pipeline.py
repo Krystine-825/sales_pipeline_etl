@@ -12,8 +12,10 @@ engine = create_engine(db_url)
 # 1. Extract: Lấy dữ liệu từ API kèm Header chống block
 print("Đang lấy dữ liệu từ API...")
 headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-}
+        'User-Agent': 'PostmanRuntime/7.36.3',
+        'Accept': '*/*',
+        'Connection': 'keep-alive'
+    }
 response = requests.get("https://fakestoreapi.com/carts", headers=headers, timeout=15)
 
 if response.status_code != 200:
