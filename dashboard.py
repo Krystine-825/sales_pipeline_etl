@@ -27,9 +27,9 @@ df_sales = pd.read_sql(query, engine)
 # 3. Gọi API lấy giá sản phẩm và kết hợp dữ liệu
 @st.cache_data 
 def get_product_prices():
-    headers = {'User-Agent': 'PostmanRuntime/7.36.3', 'Accept': '*/*'}
-    res = requests.get("https://fakestoreapi.com/products", headers=headers, timeout=15).json()
-    df_products = pd.json_normalize(res)[['id', 'price', 'title']]
+    # Lấy danh sách sản phẩm từ DummyJSON, giới hạn số lượng đủ dùng
+    res = requests.get("https://dummyjson.com/products?limit=150", timeout=15).json()
+    df_products = pd.json_normalize(res['products'])[['id', 'price', 'title']]
     return df_products.rename(columns={'id': 'product_id'})
 
 df_prices = get_product_prices()
