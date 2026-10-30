@@ -1,8 +1,13 @@
 import pandas as pd
 from sqlalchemy import create_engine
+import os
+from dotenv import load_dotenv
+from sqlalchemy import create_engine
 
 # Kết nối tới PostgreSQL
-engine = create_engine('postgresql+psycopg2://admin:adminpassword@localhost:5432/sales_data')
+load_dotenv() 
+db_url = os.getenv("DATABASE_URL")
+engine = create_engine(db_url)
 
 # Truy vấn 1: Lấy 5 bản ghi đầu tiên để kiểm tra cấu trúc
 print("--- 5 BẢN GHI ĐẦU TIÊN ---")

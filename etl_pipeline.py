@@ -1,6 +1,9 @@
 import requests
 import pandas as pd
 from sqlalchemy import create_engine
+import os
+from dotenv import load_dotenv
+from sqlalchemy import create_engine
 
 # 1. Extract
 print("Đang lấy dữ liệu từ API...")
@@ -25,7 +28,9 @@ df_carts['order_date'] = pd.to_datetime(df_carts['order_date']).dt.date
 
 # 3. Load: Kết nối tới PostgreSQL trong Docker
 print("Đang nạp dữ liệu vào PostgreSQL...")
-engine = create_engine('postgresql+psycopg2://admin:adminpassword@localhost:5432/sales_data')
+load_dotenv() 
+db_url = os.getenv("DATABASE_URL")
+engine = create_engine(db_url)
 
 # Tạo bảng sales_orders và insert toàn bộ data
 df_carts.to_sql('sales_orders', engine, if_exists='replace', index=False)

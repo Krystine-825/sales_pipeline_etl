@@ -5,10 +5,14 @@ import seaborn as sns
 from sqlalchemy import create_engine
 import requests
 import io
+import os
+from dotenv import load_dotenv
+from sqlalchemy import create_engine
 
 # 1. Kết nối cơ sở dữ liệu
-engine = create_engine('postgresql+psycopg2://admin:adminpassword@localhost:5432/sales_data')
-
+load_dotenv() 
+db_url = os.getenv("DATABASE_URL")
+engine = create_engine(db_url)
 st.title("📊 Báo cáo Doanh số & Doanh thu")
 
 # 2. Truy vấn dữ liệu đơn hàng
